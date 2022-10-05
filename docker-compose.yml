@@ -5,36 +5,36 @@ services:
         build: .
         restart: always
         ports: 
-            - 8080:80
+            - 80:80
         environment: 
-            WORDPRESS_DB_HOST: db
-            WORDPRESS_DB_USER: wpuser
-            WORDPRESS_DB_PASSWORD: wppass
-            WORDPRESS_DB_NAME: wpdb
+            WORDPRESS_DB_HOST: appdb
+            WORDPRESS_DB_USER: appdb
+            WORDPRESS_DB_PASSWORD: appdb
+            WORDPRESS_DB_NAME: appdb
         volumes: 
             - ./wp-content:/var/www/html/wp-content/
 
-    db:
+    appdb:
         image: mysql:5.7
         restart: always
         environment: 
-            MYSQL_DATABASE: wpdb
-            MYSQL_USER: wpuser
-            MYSQL_PASSWORD: wppass
+            MYSQL_DATABASE: appdb
+            MYSQL_USER: appdb
+            MYSQL_PASSWORD: appdb
             MYSQL_RANDOM_ROOT_PASSWORD: '1'
         volumes: 
-            - db:/var/lib/mysql
+            - appdb:/var/lib/mysql
 
     adminer:
         depends_on: 
-            - db
+            - appdb
         image: adminer
         restart: always
         ports: 
-            - 8888:8080
+            - 8080:8080
 
 networks: 
     back:
         
 volumes: 
-    db:
+    appdb:
