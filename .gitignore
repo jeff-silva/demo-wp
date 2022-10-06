@@ -4,3 +4,4 @@ wp-content/themes/*
 wp-content/upgrade/*
 !wp-content/plugins/demo/
 !wp-content/themes/demo/
+.vscode
