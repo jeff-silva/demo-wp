@@ -73,7 +73,7 @@ return new class extends \Elementor\Widget_Base {
 		$this->end_controls_section();
 	}
 
-	protected function render() {
+	public function render_full() {
 		$set = $this->computed_settings();
 
 		?>
@@ -98,6 +98,4 @@ return new class extends \Elementor\Widget_Base {
 		</script>
 		<?php
 	}
-
-	protected function content_template() {}
 };

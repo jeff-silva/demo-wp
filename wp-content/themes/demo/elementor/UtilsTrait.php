@@ -10,9 +10,15 @@ trait UtilsTrait {
 
     return $GLOBALS['elementor_global_settings'];
   }
+
+  public $computed_settings = false;
   
   public function computed_settings()
   {
+    if ($this->computed_settings) {
+      return $this->computed_settings;
+    }
+
     $global_settings = $this->get_global_settings();
     
     // Global colors
@@ -62,7 +68,37 @@ trait UtilsTrait {
     $setting_return->is_edit = \Elementor\Plugin::$instance->editor->is_edit_mode();
     $setting_return->is_preview = \Elementor\Plugin::$instance->preview->is_preview_mode();
 
+    $this->computed_settings = $setting_return;
     return $setting_return;
+  }
+
+
+  public function render_full() {
+    echo 'render aa';
+  }
+
+
+  public function render_style() {
+    return false;
+  }
+
+  
+  protected function render() {
+    $set = $this->computed_settings();
+
+    echo "\n\t\t<!--";
+    echo "\n\t\tElement: ". $this->get_title();
+    echo "\n\t\telementor/elements/". $this->get_name() . '.php';
+    echo "\n\t\t-->";
+
+    if ($style = $this->render_style()) {
+      $style = str_replace('--id', "#{$set->id}", $style);
+      echo "\n\t\t<style>{$style}</style>";
+    }
+
+    echo "\n";
+    $this->render_full();
+    echo "\n\t\t<!-- ". $this->get_name() . " end -->\n\n";
   }
 
 }

@@ -97,7 +97,7 @@ return new class extends \Elementor\Widget_Base {
 		$this->end_controls_section();
 	}
 
-	protected function render() {
+	public function render_full() {
 		$set = $this->computed_settings();
 
 		$data = [
@@ -121,21 +121,18 @@ return new class extends \Elementor\Widget_Base {
 								>
 									{{ imcResult.text }}
 								</v-alert>
-
-								<div class="d-flex">
-									<div class="flex-grow-1">
+								<br>
+								<v-row>
+									<v-col cols="12" md="6">
 										<v-text-field
 											label="Peso"
 											v-model.number="input.peso"
 											type="number"
-											suffix="Gramas"
+											suffix="Kg"
 											min="0"
 										></v-text-field>
-									</div>
-		
-									<div class="px-5"></div>
-		
-									<div class="flex-grow-1">
+									</v-col>
+									<v-col cols="12" md="6">
 										<v-text-field
 											label="Altura"
 											v-model.number="input.altura"
@@ -143,8 +140,8 @@ return new class extends \Elementor\Widget_Base {
 											suffix="Centimetros"
 											min="0"
 										></v-text-field>
-									</div>
-								</div>
+									</v-col>
+								</v-row>
 							</v-card-text>
 						</v-card>
 					</v-container>
@@ -199,5 +196,11 @@ return new class extends \Elementor\Widget_Base {
 		<?php
 	}
 
-	protected function content_template() {}
+	public function render_style() {
+		return '
+			--id .v-application--wrap {
+				min-height: auto !important;
+			}
+		';
+	}
 };
