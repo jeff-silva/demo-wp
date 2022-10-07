@@ -16,6 +16,7 @@ include __DIR__ . '/utils/wp-remove-emoji.php';
 add_action('elementor/widgets/widgets_registered', function($manager) {
   include __DIR__ . '/elementor/UtilsTrait.php';
 
+  $files[] = __DIR__ . '/elementor/elements/form-contact.php';
   $files[] = __DIR__ . '/elementor/elements/imc.php';
   $files[] = __DIR__ . '/elementor/elements/layout-default.php';
   $files[] = __DIR__ . '/elementor/elements/test.php';
