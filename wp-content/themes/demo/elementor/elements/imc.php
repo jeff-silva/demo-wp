@@ -97,9 +97,7 @@ return new class extends \Elementor\Widget_Base {
 		$this->end_controls_section();
 	}
 
-	public function render_full() {
-		$set = $this->computed_settings();
-
+	public function content($set) {
 		$data = [
 			'input' => [
 				'peso' => intval($set->peso),
@@ -148,59 +146,63 @@ return new class extends \Elementor\Widget_Base {
 				</v-main>
 			</v-app>
 		</div>
-
-		<script>
-		new Vue({
-			el: "#<?php echo $set->id; ?>",
-			vuetify: new Vuetify(),
-			data: <?php echo json_encode($data); ?>,
-			computed: {
-				imcResult() {
-					let altura = this.input.altura / 100;
-					let imc = Math.max(0, this.input.peso / (altura * altura));
-					let text = 'Seu peso está dentro do ideal';
-					let color = 'green';
-					let icon = 'success';
-
-					if (imc<18.5) {
-						text = '<?php echo $set->resultado_abaixo; ?>';
-						color = 'red';
-						icon = 'error';
-					}
-					else if (imc>18.5 && imc<=25) {
-						text = '<?php echo $set->resultado_regular; ?>';
-						color = 'green';
-						icon = 'success';
-					}
-					else if (imc>25 && imc<=30) {
-						text = '<?php echo $set->resultado_sobrepeso; ?>';
-						color = 'yellow';
-						icon = 'warning';
-					}
-					else if (imc>30 && imc<=40) {
-						text = '<?php echo $set->resultado_obesidade; ?>';
-						color = 'red';
-						icon = 'error';
-					}
-					else if (imc>40) {
-						text = '<?php echo $set->resultado_obesidade_grave; ?>';
-						color = 'red';
-						icon = 'error';
-					}
-
-					return { imc, text, color, icon };
-				},
-			},
-		});
-		</script>
 		<?php
 	}
 
-	public function render_style() {
+	public function style() {
 		return '
 			--id .v-application--wrap {
 				min-height: auto !important;
 			}
 		';
+	}
+
+	public function footer($set) {
+		?>
+		<script>
+			new Vue({
+				el: "#<?php echo $set->id; ?>",
+				vuetify: new Vuetify(),
+				data: <?php echo json_encode($data); ?>,
+				computed: {
+					imcResult() {
+						let altura = this.input.altura / 100;
+						let imc = Math.max(0, this.input.peso / (altura * altura));
+						let text = 'Seu peso está dentro do ideal';
+						let color = 'green';
+						let icon = 'success';
+
+						if (imc<18.5) {
+							text = '<?php echo $set->resultado_abaixo; ?>';
+							color = 'red';
+							icon = 'error';
+						}
+						else if (imc>18.5 && imc<=25) {
+							text = '<?php echo $set->resultado_regular; ?>';
+							color = 'green';
+							icon = 'success';
+						}
+						else if (imc>25 && imc<=30) {
+							text = '<?php echo $set->resultado_sobrepeso; ?>';
+							color = 'yellow';
+							icon = 'warning';
+						}
+						else if (imc>30 && imc<=40) {
+							text = '<?php echo $set->resultado_obesidade; ?>';
+							color = 'red';
+							icon = 'error';
+						}
+						else if (imc>40) {
+							text = '<?php echo $set->resultado_obesidade_grave; ?>';
+							color = 'red';
+							icon = 'error';
+						}
+
+						return { imc, text, color, icon };
+					},
+				},
+			});
+		</script>
+		<?php
 	}
 };

@@ -67,38 +67,71 @@ trait UtilsTrait {
     $setting_return->id = uniqid($this->get_name() . '-');
     $setting_return->is_edit = \Elementor\Plugin::$instance->editor->is_edit_mode();
     $setting_return->is_preview = \Elementor\Plugin::$instance->preview->is_preview_mode();
+    $setting_return = $this->settings($setting_return);
 
     $this->computed_settings = $setting_return;
     return $setting_return;
   }
 
 
-  public function render_full() {
+  public function settings($set) {
+    return $set;
+  }
+
+
+  public function content() {
     echo 'render aa';
   }
 
 
-  public function render_style() {
+  public function style() {
+    return false;
+  }
+  
+  
+  public function footer() {
     return false;
   }
 
   
   protected function render() {
+    $self = $this;
     $set = $this->computed_settings();
+    
+    $comment_start = implode("\n", [
+      "\t\t<!--",
+      "\t\tElement: ". $this->get_title(),
+      "\t\telementor/elements/". $this->get_name() . '.php',
+      "\t\t-->",
+    ]);
+    
+    $comment_final = implode("\n", [
+      "\n\t\t<!-- ". $this->get_name() . " end -->\n\n",
+    ]);
 
-    echo "\n\t\t<!--";
-    echo "\n\t\tElement: ". $this->get_title();
-    echo "\n\t\telementor/elements/". $this->get_name() . '.php';
-    echo "\n\t\t-->";
+    echo $comment_start;
+    $this->content($set);
+    echo $comment_final;
 
-    if ($style = $this->render_style()) {
-      $style = str_replace('--id', "#{$set->id}", $style);
-      echo "\n\t\t<style>{$style}</style>";
+    $render_script_style = function() use($self, $set, $comment_start, $comment_final) {
+      echo $comment_start;
+      if ($style = $self->style($set)) {
+        $style = str_replace('--id', "#{$set->id}", $style);
+        echo "\n\t\t<style>{$style}</style>";
+      }
+
+      $self->footer($set);
+      echo $comment_final;
+    };
+
+    if ($set->is_edit) {
+      $render_script_style();
     }
-
-    echo "\n";
-    $this->render_full();
-    echo "\n\t\t<!-- ". $this->get_name() . " end -->\n\n";
+    else {
+      add_action('get_footer', function() use($render_script_style) {
+        $render_script_style();
+      });
+    }
   }
 
 }

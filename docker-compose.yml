@@ -24,6 +24,8 @@ services:
             MYSQL_RANDOM_ROOT_PASSWORD: '1'
         volumes: 
             - appdb:/var/lib/mysql
+        ports:
+            - 3306:3306
 
     adminer:
         depends_on: 
