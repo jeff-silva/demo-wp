@@ -28,6 +28,9 @@ include __DIR__ . '/utils/elementor-prevent-post-edit.php';
 include __DIR__ . '/utils/wp-endpoint-register.php';
 include __DIR__ . '/utils/wp-remove-emoji.php';
 
+// Admin pages
+include __DIR__ . '/admin/install.php';
+
 
 endpoint_register('get', '/aaa', function() {
   return [123];
