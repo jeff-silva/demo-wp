@@ -2,93 +2,7 @@
 
 boot_include('/vue/components/app-addr.php');
 
-if (! class_exists('ElementorFormContactSupport')) {
-	class ElementorFormContactSupport
-	{
-		static function rules()
-		{
-			$rules['required'] = (object) [
-				'name' => 'Obrigatório',
-				'callback' => function($value) {
-					return !!$value;
-				},
-			];
-			
-			$rules['email'] = (object) [
-				'name' => 'E-mail',
-				'callback' => function($value) {
-					return filter_var($value, FILTER_VALIDATE_EMAIL);
-				},
-			];
-	
-			return $rules;
-		}
-	
-		static function rulesOptions()
-		{
-			return array_map(function($rule) {
-				return $rule->name;
-			}, self::rules());
-		}
-	
-		static function inputs()
-		{
-			$inputs['v-text-field'] = (object) [
-				'name' => 'Texto simples',
-				'component' => 'v-text-field',
-				'bind' => (object) [],
-				'template' => '<v-text-field></v-text-field>',
-			];
-			
-			$inputs['v-text-field-password'] = (object) [
-				'name' => 'Password',
-				'component' => 'v-text-field',
-				'bind' => (object) [
-					'type' => 'password',
-				],
-			];
-			
-			$inputs['v-text-field-number'] = (object) [
-				'name' => 'Password',
-				'component' => 'v-text-field',
-				'bind' => (object) [
-					'type' => 'password',
-				],
-			];
-			
-			$inputs['v-select'] = (object) [
-				'name' => 'Select',
-				'component' => 'v-select',
-				'bind' => (object) [
-					'type' => 'password',
-				],
-			];
-			
-			$inputs['v-textarea'] = (object) [
-				'name' => 'Texto multilinha',
-				'component' => 'v-textarea',
-				'bind' => (object) [],
-			];
-			
-			$inputs['app-addr'] = (object) [
-				'name' => 'Endereço',
-				'component' => 'app-addr',
-				'bind' => (object) [],
-			];
-	
-			return $inputs;
-		}
-	
-		static function inputsOptions()
-		{
-			return array_map(function($rule) {
-				return $rule->name;
-			}, self::inputs());
-		}
-	}
-}
-
-return new class extends \Elementor\Widget_Base {
+$class = new class extends \Elementor\Widget_Base {
 
 	use UtilsTrait;
 
@@ -97,7 +11,7 @@ return new class extends \Elementor\Widget_Base {
 	}
 
 	public function get_title() {
-		return 'Formulário de contato';
+		return 'Demo: Formulário de contato';
 	}
 
 	// https://ecomfe.github.io/eicons/demo/demo.html
@@ -495,3 +409,92 @@ return new class extends \Elementor\Widget_Base {
 		<?php
 	}
 };
+
+
+if (! class_exists('ElementorFormContactSupport')) {
+	class ElementorFormContactSupport
+	{
+		static function rules()
+		{
+			$rules['required'] = (object) [
+				'name' => 'Obrigatório',
+				'callback' => function($value) {
+					return !!$value;
+				},
+			];
+			
+			$rules['email'] = (object) [
+				'name' => 'E-mail',
+				'callback' => function($value) {
+					return filter_var($value, FILTER_VALIDATE_EMAIL);
+				},
+			];
+	
+			return $rules;
+		}
+	
+		static function rulesOptions()
+		{
+			return array_map(function($rule) {
+				return $rule->name;
+			}, self::rules());
+		}
+	
+		static function inputs()
+		{
+			$inputs['v-text-field'] = (object) [
+				'name' => 'Texto simples',
+				'component' => 'v-text-field',
+				'bind' => (object) [],
+				'template' => '<v-text-field></v-text-field>',
+			];
+			
+			$inputs['v-text-field-password'] = (object) [
+				'name' => 'Password',
+				'component' => 'v-text-field',
+				'bind' => (object) [
+					'type' => 'password',
+				],
+			];
+			
+			$inputs['v-text-field-number'] = (object) [
+				'name' => 'Password',
+				'component' => 'v-text-field',
+				'bind' => (object) [
+					'type' => 'password',
+				],
+			];
+			
+			$inputs['v-select'] = (object) [
+				'name' => 'Select',
+				'component' => 'v-select',
+				'bind' => (object) [
+					'type' => 'password',
+				],
+			];
+			
+			$inputs['v-textarea'] = (object) [
+				'name' => 'Texto multilinha',
+				'component' => 'v-textarea',
+				'bind' => (object) [],
+			];
+			
+			$inputs['app-addr'] = (object) [
+				'name' => 'Endereço',
+				'component' => 'app-addr',
+				'bind' => (object) [],
+			];
+	
+			return $inputs;
+		}
+	
+		static function inputsOptions()
+		{
+			return array_map(function($rule) {
+				return $rule->name;
+			}, self::inputs());
+		}
+	}
+}
+
+return $class;

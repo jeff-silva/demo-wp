@@ -9,7 +9,7 @@ return new class extends \Elementor\Widget_Base {
 	}
 
 	public function get_title() {
-		return 'Element test';
+		return 'Demo: Element test';
 	}
 
 	// https://ecomfe.github.io/eicons/demo/demo.html

@@ -7,7 +7,7 @@ return new class extends \Elementor\Widget_Base {
 	}
 
 	public function get_title() {
-		return 'Layout Default';
+		return 'Demo: Layout Default';
 	}
 
 	// https://ecomfe.github.io/eicons/demo/demo.html

@@ -9,7 +9,7 @@ return new class extends \Elementor\Widget_Base {
 	}
 
 	public function get_title() {
-		return 'Calculadora IMC';
+		return 'Demo: Calculadora IMC';
 	}
 
 	// https://ecomfe.github.io/eicons/demo/demo.html
